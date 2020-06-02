@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "importHelpers": true,
+    "outDir": "./dist/",
+    "module": "ES2020",
+    "moduleResolution": "Node",
+    "rootDir": "src",
+    "strict": true,
+    "target": "ES5",
+    "composite": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
