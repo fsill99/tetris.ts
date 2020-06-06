@@ -3,12 +3,16 @@ export class State {
   private _current: Array<number>;
   private _currentPosition: number;
   private _currentRotation: number;
+  private _randomTetrominoIndex: number;
+  private _nextRandomTetrominoIndex: number;
 
-  constructor() {
+  constructor(tetrominoesLength: number) {
     this._score = 0;
     this._current = [];
     this._currentPosition = 4;
     this._currentRotation = 0;
+    this._randomTetrominoIndex = this.getRandomTetrominoIndex(tetrominoesLength)
+    this._nextRandomTetrominoIndex = this.getRandomTetrominoIndex(tetrominoesLength)
   }
 
   public get score() {
@@ -40,6 +44,23 @@ export class State {
       rotation = 0;
     }
     this._currentRotation = rotation;
+  }
+
+  public get randomTetrominoIndex() {
+    return this._randomTetrominoIndex;
+  }
+
+  public get nextRandomTetrominoIndex() {
+    return this._nextRandomTetrominoIndex;
+  }
+
+  private getRandomTetrominoIndex(length: number) {
+    return Math.floor(Math.random() * length)
+  }
+
+  public getNextRandomTetrominoIndex(length: number) {
+    this._randomTetrominoIndex = this._nextRandomTetrominoIndex
+    this._nextRandomTetrominoIndex = this.getRandomTetrominoIndex(length)
   }
 
   public incrementScore() {

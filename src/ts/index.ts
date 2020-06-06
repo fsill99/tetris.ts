@@ -11,15 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ".mini-grid div"
   );
 
-  let nextRandom = 0;
-
   let timerId: NodeJS.Timeout | null = null;
   const settings = new Settings();
-  const state = new State();
   const tetrominoes = new Tetrominoes(settings.width);
+  const state = new State(tetrominoes.list.length);
 
-  let randomTetromino = Math.floor(Math.random() * tetrominoes.list.length);
-  state.current = tetrominoes.list[randomTetromino].getPositions()[
+  state.current = tetrominoes.list[state.randomTetrominoIndex].getPositions()[
     state.currentRotation
   ];
 
@@ -28,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     state.current.forEach((index) => {
       squares[state.currentPosition + index].classList.add("tetromino");
       squares[state.currentPosition + index].style.backgroundColor =
-        tetrominoes.list[randomTetromino].color;
+        tetrominoes.list[state.randomTetrominoIndex].color;
     });
   }
 
@@ -56,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function moveDown() {
     undraw();
-    // currentPosition += settings.width;
     state.incrementPosition(settings.width);
     draw();
     freeze();
@@ -74,9 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
         squares[state.currentPosition + index].classList.add("taken")
       );
 
-      randomTetromino = nextRandom;
-      nextRandom = Math.floor(Math.random() * tetrominoes.list.length);
-      state.current = tetrominoes.list[randomTetromino].getPositions()[
+      state.getNextRandomTetrominoIndex(tetrominoes.list.length)
+      state.current = tetrominoes.list[state.randomTetrominoIndex].getPositions()[
         state.currentRotation
       ];
       state.currentPosition = 4;
@@ -137,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       state.currentRotation = 0;
     }
 
-    state.current = tetrominoes.list[randomTetromino].getPositions()[
+    state.current = tetrominoes.list[state.randomTetrominoIndex].getPositions()[
       state.currentRotation
     ];
     draw();
@@ -150,12 +145,12 @@ document.addEventListener("DOMContentLoaded", () => {
       square.classList.remove("tetromino");
     });
 
-    tetrominoes.list[nextRandom]
+    tetrominoes.list[state.nextRandomTetrominoIndex]
       .getPositions(settings.displayWidth)[0]
       .forEach((index) => {
         diplaySquares[settings.displayIndex + index].classList.add("tetromino");
         diplaySquares[settings.displayIndex + index].style.backgroundColor =
-          tetrominoes.list[nextRandom].color;
+          tetrominoes.list[state.nextRandomTetrominoIndex].color;
       });
   }
 
@@ -169,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
       startButton!.innerHTML = "pause";
       draw();
       timerId = setInterval(moveDown, settings.msInterval);
-      nextRandom = Math.floor(Math.random() * tetrominoes.list.length);
       displayShapes();
     }
   });
