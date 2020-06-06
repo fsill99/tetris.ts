@@ -130,6 +130,31 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   }
 
+  function isAtRight() {
+    return state.current.some(index=> (state.currentRotation + index + 1) % settings.width === 0)
+  }
+
+  function isAtLeft() {
+    return state.current.some(index=> (state.currentRotation + index) % settings.width === 0)
+  }
+
+  function checkRotatedPosition(P = state.currentRotation) {
+    P = P || state.currentRotation
+    if ((P+1) % settings.width < 4) {
+      if (isAtRight()){
+        state.currentRotation++
+        checkRotatedPosition(P)
+        }
+    }
+    else if (P % settings.width > 5) {
+      if (isAtLeft()){
+        state.currentRotation--
+      checkRotatedPosition(P)
+      }
+    }
+  }
+
+
   function rotate() {
     undraw();
     state.incrementRotation();
@@ -140,6 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     state.current = tetrominoes.list[randomTetromino].getPositions()[
       state.currentRotation
     ];
+    checkRotatedPosition();
     draw();
   }
 
