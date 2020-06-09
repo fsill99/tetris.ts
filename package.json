@@ -23,6 +23,6 @@
     "build:docker": "docker build . --rm -t tetris.ts",
     "start:docker": "docker run --publish 8666:80 --name tetris -d tetris.ts",
     "clean:docker": "docker rm tetris -f && docker rmi tetris.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\""
   }
 }
