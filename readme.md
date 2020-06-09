@@ -1,6 +1,8 @@
 # Tetris.ts
 Tetris Game written in **Typescript**!
 
+![Node.js CI](https://github.com/fsill99/tetris.ts/workflows/Node.js%20CI/badge.svg)
+
 ## Build
 Run following command to build the project:
 ```
