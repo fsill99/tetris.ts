@@ -24,9 +24,7 @@ export class Tetrominoes {
     return this._list;
   }
 
-  public getRandomTetromino() {}
-
-  private getRandomRotation() {
+  public getRandomRotation() {
     return Math.floor(Math.random() * 4);
   }
 }

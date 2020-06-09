@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     tetrominoes.list[state.nextRandomTetrominoIndex]
-      .getPositions(settings.displayWidth)[0]
+      .getPositions(settings.displayWidth)[tetrominoes.getRandomRotation()]
       .forEach((index) => {
         diplaySquares[settings.displayIndex + index].classList.add("tetromino");
         diplaySquares[settings.displayIndex + index].style.backgroundColor =
